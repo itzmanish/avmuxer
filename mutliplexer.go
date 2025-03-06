@@ -125,6 +125,12 @@ func (mr *Multiplexer) AddSourceStream(id string, stream Stream) error {
 	mr.sources[id] = stream
 	return nil
 }
+func (mr *Multiplexer) RemoveSourceStream(id string) error {
+	mr.Lock()
+	defer mr.Unlock()
+	delete(mr.sources, id)
+	return nil
+}
 
 func (mr *Multiplexer) interleavedMultiplex(sampleSize int) []int16 {
 	buffs := [][]int16{}
